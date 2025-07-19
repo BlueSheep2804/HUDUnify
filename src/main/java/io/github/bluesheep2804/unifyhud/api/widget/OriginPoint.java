@@ -1,4 +1,4 @@
-package io.github.bluesheep2804.unifyhud.api.layer;
+package io.github.bluesheep2804.unifyhud.api.widget;
 
 public enum OriginPoint {
     TOP_LEFT(0, 0),

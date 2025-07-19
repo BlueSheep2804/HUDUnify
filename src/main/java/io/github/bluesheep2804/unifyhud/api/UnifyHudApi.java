@@ -1,5 +1,7 @@
 package io.github.bluesheep2804.unifyhud.api;
 
+import net.minecraft.world.item.ItemStack;
+
 public abstract class UnifyHudApi {
     private static UnifyHudApi instance;
 
@@ -19,4 +21,6 @@ public abstract class UnifyHudApi {
         }
         return instance;
     }
+
+    public abstract ItemStack getPlayerItemStack(int slotId);
 }
