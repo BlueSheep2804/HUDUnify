@@ -10,7 +10,6 @@ import java.util.List;
 
 public class UnifyHudLayer implements IGuiOverlay, IUnifyHudLayer {
     private String name;
-    private String id;
     private List<IWidget> widgets;
 
     @Override
@@ -21,16 +20,6 @@ public class UnifyHudLayer implements IGuiOverlay, IUnifyHudLayer {
     @Override
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Override

@@ -32,13 +32,13 @@ public class LayerHandler {
 
     public void addLayerAll(UnifyHudLayer... layers) {
         for (UnifyHudLayer layer : layers) {
-            addLayer(layer.getId(), layer);
+            addLayer(layer.getName(), layer);
         }
     }
 
     public void addLayerAll(Iterable<UnifyHudLayer> layers) {
         for (UnifyHudLayer layer : layers) {
-            addLayer(layer.getId(), layer);
+            addLayer(layer.getName(), layer);
         }
     }
 

@@ -7,8 +7,6 @@ import java.util.List;
 public interface IUnifyHudLayer {
     String getName();
     void setName(String name);
-    String getId();
-    void setId(String id);
     List<IWidget> getWidgets();
     void setWidgets(List<IWidget> widgets);
 }
