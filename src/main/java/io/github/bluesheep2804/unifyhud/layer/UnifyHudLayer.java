@@ -9,11 +9,33 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import java.util.List;
 
 public class UnifyHudLayer implements IGuiOverlay, IUnifyHudLayer {
+    private String name;
+    private String id;
     private List<IWidget> widgets;
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
     public List<IWidget> getWidgets() {
-        return widgets;
+        return this.widgets;
     }
 
     @Override

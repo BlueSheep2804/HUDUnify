@@ -12,10 +12,17 @@ import java.util.HashMap;
 import static io.github.bluesheep2804.unifyhud.UnifyHud.rl;
 
 public class LayerHandler {
-    public static final LayerHandler INSTANCE = new LayerHandler();
+    public static LayerHandler INSTANCE = new LayerHandler();
+    private ImmutableList<NamedGuiOverlay> defaultOverlays;
+    private ImmutableMap<ResourceLocation, NamedGuiOverlay> defaultOverlaysByName;
     private final HashMap<ResourceLocation, NamedGuiOverlay> additionalOverlays = new HashMap<>();
 
     private LayerHandler() {}
+
+    public void init() {
+        defaultOverlays = ImmutableList.copyOf(GuiOverlayManager.getOverlays());
+        defaultOverlaysByName = ImmutableMap.copyOf(GuiOverlayManagerAccessor.getOverlaysByName());
+    }
 
     public void addLayer(String name, UnifyHudLayer unifyHudLayer) {
         ResourceLocation id = rl(name);
@@ -23,15 +30,31 @@ public class LayerHandler {
         additionalOverlays.put(id, layer);
     }
 
+    public void addLayerAll(UnifyHudLayer... layers) {
+        for (UnifyHudLayer layer : layers) {
+            addLayer(layer.getId(), layer);
+        }
+    }
+
+    public void addLayerAll(Iterable<UnifyHudLayer> layers) {
+        for (UnifyHudLayer layer : layers) {
+            addLayer(layer.getId(), layer);
+        }
+    }
+
+    public void clearLayers() {
+        additionalOverlays.clear();
+    }
+
     public void registerOverlay() {
         ImmutableList<NamedGuiOverlay> overlays = ImmutableList.<NamedGuiOverlay>builder()
                 .addAll(additionalOverlays.values())
-                .addAll(GuiOverlayManager.getOverlays())
+                .addAll(defaultOverlays)
                 .build();
 
         ImmutableMap<ResourceLocation, NamedGuiOverlay> overlaysByName = ImmutableMap.<ResourceLocation, NamedGuiOverlay>builder()
                 .putAll(additionalOverlays)
-                .putAll(GuiOverlayManagerAccessor.getOverlaysByName())
+                .putAll(defaultOverlaysByName)
                 .build();
         GuiOverlayManagerAccessor.setOverlays(overlays);
         GuiOverlayManagerAccessor.setOverlaysByName(overlaysByName);
