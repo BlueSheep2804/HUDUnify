@@ -53,9 +53,8 @@ public class RectangleWidget extends AbstractBasicWidget {
     @Override
     public void render(GuiGraphics guiGraphics) {
         if (!isVisible()) return;
-        OriginPoint origin = getOriginPoint();
-        int x = (int) ((guiGraphics.guiWidth() * origin.getX()) - width * origin.getX()) + getPosX();
-        int y = (int) ((guiGraphics.guiHeight() * origin.getY()) - height * origin.getY()) + getPosY();
+        int x = calculatePosX(width, guiGraphics.guiWidth());
+        int y = calculatePosY(height, guiGraphics.guiHeight());
         guiGraphics.fill(
                 x,
                 y,

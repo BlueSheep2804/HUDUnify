@@ -93,15 +93,13 @@ public class TextWidget extends AbstractBasicWidget {
         Font font = Minecraft.getInstance().font;
         Component textComponent = Component.literal(prefix + getComponent().resolve().toString() + suffix)
                 .withStyle(convertStyleToChatFormatting());
-        int originX = (int) (guiGraphics.guiWidth() * this.getOriginPoint().getX());
-        int originY = (int) (guiGraphics.guiHeight() * this.getOriginPoint().getY());
-        int x = originX - (int) (font.width(textComponent) * this.getOriginPoint().getX());
-        int y = originY - (int) (font.lineHeight * this.getOriginPoint().getY());
+        int x = calculatePosX(font.width(textComponent), guiGraphics.guiWidth());
+        int y = calculatePosY(font.lineHeight, guiGraphics.guiHeight());
         guiGraphics.drawString(
                 font,
                 textComponent,
-                x + getPosX(),
-                y + getPosY(),
+                x,
+                y,
                 getColorInt(),
                 dropShadow
         );

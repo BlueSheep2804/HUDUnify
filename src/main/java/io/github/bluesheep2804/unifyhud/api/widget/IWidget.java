@@ -23,4 +23,14 @@ public interface IWidget {
     void setVisible(boolean visible);
 
     void render(GuiGraphics guiGraphics);
+
+    default int calculatePosX(int width, int screenWidth) {
+        float offsetX = getOriginPoint().getX();
+        return (int) ((screenWidth * offsetX) - (width * offsetX)) + getPosX();
+    }
+
+    default int calculatePosY(int height, int screenHeight) {
+        float offsetY = getOriginPoint().getY();
+        return (int) ((screenHeight * offsetY) - (height * offsetY)) + getPosY();
+    }
 }
