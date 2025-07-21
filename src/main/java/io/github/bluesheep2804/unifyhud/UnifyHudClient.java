@@ -1,6 +1,10 @@
 package io.github.bluesheep2804.unifyhud;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import io.github.bluesheep2804.unifyhud.component.ComponentRegistry;
+import io.github.bluesheep2804.unifyhud.component.ItemCountComponent;
+import io.github.bluesheep2804.unifyhud.component.ItemDamageComponent;
+import io.github.bluesheep2804.unifyhud.component.LiteralComponent;
 import io.github.bluesheep2804.unifyhud.config.ConfigHandler;
 import io.github.bluesheep2804.unifyhud.layer.LayerHandler;
 import io.github.bluesheep2804.unifyhud.layer.UnifyHudLayer;
@@ -33,6 +37,11 @@ public class UnifyHudClient {
         LayerHandler.INSTANCE.init();
         ConfigHandler.INSTANCE.loadConfig();
         LayerHandler.INSTANCE.registerOverlay();
+        ComponentRegistry.INSTANCE.registerAll(
+                new ItemCountComponent(),
+                new ItemDamageComponent(),
+                new LiteralComponent()
+        );
     }
 
     @SubscribeEvent
