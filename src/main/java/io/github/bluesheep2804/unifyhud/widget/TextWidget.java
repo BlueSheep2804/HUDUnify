@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.unifyhud.widget;
 
+import io.github.bluesheep2804.unifyhud.api.component.IComponent;
 import io.github.bluesheep2804.unifyhud.api.widget.AbstractBasicWidget;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -14,11 +15,20 @@ import java.util.Arrays;
 import static io.github.bluesheep2804.unifyhud.UnifyHud.rl;
 
 public class TextWidget extends AbstractBasicWidget {
+    private IComponent<?> component;
     private String prefix = "";
     private String suffix = "";
     private Style[] style = {Style.NORMAL};
     private String color = "#FFFFFF";
     private boolean dropShadow = true;
+
+    public IComponent<?> getComponent() {
+        return component;
+    }
+
+    public void setComponent(IComponent<?> component) {
+        this.component = component;
+    }
 
     public String getPrefix() {
         return this.prefix;

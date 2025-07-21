@@ -7,6 +7,7 @@ import io.github.bluesheep2804.unifyhud.component.ItemDamageComponent;
 import io.github.bluesheep2804.unifyhud.component.LiteralComponent;
 import io.github.bluesheep2804.unifyhud.config.ConfigHandler;
 import io.github.bluesheep2804.unifyhud.layer.LayerHandler;
+import io.github.bluesheep2804.unifyhud.widget.RectangleWidget;
 import io.github.bluesheep2804.unifyhud.widget.TextWidget;
 import io.github.bluesheep2804.unifyhud.widget.WidgetRegistry;
 import net.minecraft.client.KeyMapping;
@@ -42,7 +43,8 @@ public class UnifyHudClient {
                 new LiteralComponent()
         );
         WidgetRegistry.INSTANCE.registerAll(
-                new TextWidget()
+                new TextWidget(),
+                new RectangleWidget()
         );
         ConfigHandler.INSTANCE.loadConfig();
         LayerHandler.INSTANCE.registerOverlay();
