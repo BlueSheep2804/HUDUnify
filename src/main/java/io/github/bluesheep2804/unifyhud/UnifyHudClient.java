@@ -7,7 +7,8 @@ import io.github.bluesheep2804.unifyhud.component.ItemDamageComponent;
 import io.github.bluesheep2804.unifyhud.component.LiteralComponent;
 import io.github.bluesheep2804.unifyhud.config.ConfigHandler;
 import io.github.bluesheep2804.unifyhud.layer.LayerHandler;
-import io.github.bluesheep2804.unifyhud.layer.UnifyHudLayer;
+import io.github.bluesheep2804.unifyhud.widget.TextWidget;
+import io.github.bluesheep2804.unifyhud.widget.WidgetRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -35,13 +36,16 @@ public class UnifyHudClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(UnifyHudClient::onClientTick);
         LayerHandler.INSTANCE.init();
-        ConfigHandler.INSTANCE.loadConfig();
-        LayerHandler.INSTANCE.registerOverlay();
         ComponentRegistry.INSTANCE.registerAll(
                 new ItemCountComponent(),
                 new ItemDamageComponent(),
                 new LiteralComponent()
         );
+        WidgetRegistry.INSTANCE.registerAll(
+                new TextWidget()
+        );
+        ConfigHandler.INSTANCE.loadConfig();
+        LayerHandler.INSTANCE.registerOverlay();
     }
 
     @SubscribeEvent
