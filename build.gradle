@@ -79,6 +79,7 @@ mixin {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven { url = 'https://modmaven.dev/' }
 }
 
 dependencies {
@@ -86,6 +87,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
+    runtimeOnly fg.deobf("mekanism:Mekanism:${minecraft_version}-10.4.15.75")
 }
 
 tasks.named('processResources', ProcessResources).configure {

@@ -1,10 +1,7 @@
 package io.github.bluesheep2804.unifyhud;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import io.github.bluesheep2804.unifyhud.component.ComponentRegistry;
-import io.github.bluesheep2804.unifyhud.component.ItemCountComponent;
-import io.github.bluesheep2804.unifyhud.component.ItemDamageComponent;
-import io.github.bluesheep2804.unifyhud.component.LiteralComponent;
+import io.github.bluesheep2804.unifyhud.component.*;
 import io.github.bluesheep2804.unifyhud.config.ConfigHandler;
 import io.github.bluesheep2804.unifyhud.layer.LayerHandler;
 import io.github.bluesheep2804.unifyhud.widget.RectangleWidget;
@@ -41,7 +38,8 @@ public class UnifyHudClient {
         ComponentRegistry.INSTANCE.registerAll(
                 new ItemCountComponent(),
                 new ItemDamageComponent(),
-                new LiteralComponent()
+                new LiteralComponent(),
+                new ItemEnergyComponent()
         );
         WidgetRegistry.INSTANCE.registerAll(
                 new TextWidget(),
