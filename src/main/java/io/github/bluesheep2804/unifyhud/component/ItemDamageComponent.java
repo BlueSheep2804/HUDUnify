@@ -1,13 +1,13 @@
 package io.github.bluesheep2804.unifyhud.component;
 
 import io.github.bluesheep2804.unifyhud.ApiImpl;
-import io.github.bluesheep2804.unifyhud.api.component.AbstractInventoryComponent;
+import io.github.bluesheep2804.unifyhud.api.component.AbstractInventoryRangeComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import static io.github.bluesheep2804.unifyhud.UnifyHud.rl;
 
-public class ItemDamageComponent extends AbstractInventoryComponent {
+public class ItemDamageComponent extends AbstractInventoryRangeComponent {
     @Override
     public ResourceLocation getId() {
         return rl("item_damage");

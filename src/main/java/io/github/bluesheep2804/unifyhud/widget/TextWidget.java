@@ -91,8 +91,16 @@ public class TextWidget extends AbstractBasicWidget {
     public void render(GuiGraphics guiGraphics) {
         if (!isVisible()) return;
         Font font = Minecraft.getInstance().font;
-        Component textComponent = Component.literal(prefix + getComponent().resolve().toString() + suffix)
-                .withStyle(convertStyleToChatFormatting());
+        Object component = getComponent().resolve();
+        Component textComponent;
+        if (component instanceof Component) {
+            textComponent = Component.empty()
+                    .withStyle(convertStyleToChatFormatting())
+                    .append(prefix).append((Component) component).append(suffix);
+        } else {
+            textComponent = Component.literal(prefix + component.toString() + suffix)
+                    .withStyle(convertStyleToChatFormatting());
+        }
         int x = calculatePosX(font.width(textComponent), guiGraphics.guiWidth());
         int y = calculatePosY(font.lineHeight, guiGraphics.guiHeight());
         guiGraphics.drawString(

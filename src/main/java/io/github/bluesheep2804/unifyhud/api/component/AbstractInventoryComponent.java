@@ -1,8 +1,7 @@
 package io.github.bluesheep2804.unifyhud.api.component;
 
-public abstract class AbstractInventoryComponent implements IInventoryComponent {
+public abstract class AbstractInventoryComponent<T> implements IComponent<T>, IHasInventorySlot {
     private int slotId;
-    private Mode mode;
 
     @Override
     public int getSlotId() {
@@ -12,15 +11,5 @@ public abstract class AbstractInventoryComponent implements IInventoryComponent 
     @Override
     public void setSlotId(int slotId) {
         this.slotId = slotId;
-    }
-
-    @Override
-    public Mode getMode() {
-        return this.mode;
-    }
-
-    @Override
-    public void setMode(Mode mode) {
-        this.mode = mode;
     }
 }

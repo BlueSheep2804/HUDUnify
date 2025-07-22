@@ -1,9 +1,6 @@
 package io.github.bluesheep2804.unifyhud.api.component;
 
-public interface IInventoryComponent extends IComponent<Integer> {
-    int getSlotId();
-    void setSlotId(int slotId);
-
+public interface IHasRangeMode {
     Mode getMode();
     void setMode(Mode mode);
 
