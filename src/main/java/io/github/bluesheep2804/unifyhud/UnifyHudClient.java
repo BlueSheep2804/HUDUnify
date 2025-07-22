@@ -41,7 +41,10 @@ public class UnifyHudClient {
                 new LiteralComponent(),
                 new ItemEnergyComponent(),
                 new ItemNameComponent(),
-                new ItemIdComponent()
+                new ItemIdComponent(),
+                new PlayerHealthComponent(),
+                new PlayerPosComponent(),
+                new PlayerRotationComponent()
         );
         WidgetRegistry.INSTANCE.registerAll(
                 new TextWidget(),

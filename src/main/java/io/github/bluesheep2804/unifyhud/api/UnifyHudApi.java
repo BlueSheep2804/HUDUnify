@@ -1,5 +1,7 @@
 package io.github.bluesheep2804.unifyhud.api;
 
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public abstract class UnifyHudApi {
@@ -23,4 +25,6 @@ public abstract class UnifyHudApi {
     }
 
     public abstract ItemStack getPlayerItemStack(int slotId);
+    public abstract Player getPlayer();
+    public abstract Entity getCameraEntity();
 }
