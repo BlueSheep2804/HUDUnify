@@ -2,6 +2,7 @@ package io.github.bluesheep2804.unifyhud.config;
 
 import com.google.gson.*;
 import io.github.bluesheep2804.unifyhud.api.widget.IWidget;
+import io.github.bluesheep2804.unifyhud.widget.ListWidget;
 import io.github.bluesheep2804.unifyhud.widget.WidgetRegistry;
 import net.minecraft.resources.ResourceLocation;
 
@@ -14,10 +15,12 @@ public class WidgetDeserializer implements JsonDeserializer<IWidget> {
         JsonObject obj = jsonElement.getAsJsonObject();
         String type = obj.get("type").getAsString();
 
-        IWidget widget = WidgetRegistry.INSTANCE.getWidgets().get(ResourceLocation.parse(type));
-        if (Objects.isNull(widget)) {
+        IWidget registeredWidget = WidgetRegistry.INSTANCE.getWidgets().get(ResourceLocation.parse(type));
+        if (Objects.isNull(registeredWidget)) {
             throw new JsonParseException("Unknown widget type: " + type);
         }
-        return context.deserialize(obj, widget.getClass());
+        IWidget widget = context.deserialize(obj, registeredWidget.getClass());
+        widget.init();
+        return widget;
     }
 }

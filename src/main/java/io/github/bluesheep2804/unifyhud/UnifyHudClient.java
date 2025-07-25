@@ -4,10 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import io.github.bluesheep2804.unifyhud.component.*;
 import io.github.bluesheep2804.unifyhud.config.ConfigHandler;
 import io.github.bluesheep2804.unifyhud.layer.LayerHandler;
-import io.github.bluesheep2804.unifyhud.widget.RectangleWidget;
-import io.github.bluesheep2804.unifyhud.widget.TextWidget;
-import io.github.bluesheep2804.unifyhud.widget.TextureWidget;
-import io.github.bluesheep2804.unifyhud.widget.WidgetRegistry;
+import io.github.bluesheep2804.unifyhud.widget.*;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -49,7 +46,8 @@ public class UnifyHudClient {
         WidgetRegistry.INSTANCE.registerAll(
                 new TextWidget(),
                 new RectangleWidget(),
-                new TextureWidget()
+                new TextureWidget(),
+                new ListWidget()
         );
         ConfigHandler.INSTANCE.loadConfig();
         LayerHandler.INSTANCE.registerOverlay();

@@ -1,6 +1,6 @@
 package io.github.bluesheep2804.unifyhud.api.widget;
 
-public abstract class AbstractBasicWidget implements IWidget {
+public abstract class AbstractWidget implements IWidget {
     private int posX = 0;
     private int posY = 0;
     private OriginPoint originPoint = OriginPoint.TOP_LEFT;

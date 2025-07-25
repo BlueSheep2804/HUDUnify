@@ -1,18 +1,18 @@
 package io.github.bluesheep2804.unifyhud.widget;
 
-import io.github.bluesheep2804.unifyhud.api.widget.AbstractBasicWidget;
-import io.github.bluesheep2804.unifyhud.api.widget.OriginPoint;
+import io.github.bluesheep2804.unifyhud.api.widget.AbstractWidget;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CommonColors;
 
 import static io.github.bluesheep2804.unifyhud.UnifyHud.rl;
 
-public class RectangleWidget extends AbstractBasicWidget {
+public class RectangleWidget extends AbstractWidget {
     private int width;
     private int height;
     private String color = "#FFFFFF";
 
+    @Override
     public int getWidth() {
         return width;
     }
@@ -21,6 +21,7 @@ public class RectangleWidget extends AbstractBasicWidget {
         this.width = width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
@@ -51,10 +52,10 @@ public class RectangleWidget extends AbstractBasicWidget {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics) {
+    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
-        int x = calculatePosX(width, guiGraphics.guiWidth());
-        int y = calculatePosY(height, guiGraphics.guiHeight());
+        int x = calculatePosX(width, maxWidth) + offsetX;
+        int y = calculatePosY(height, maxHeight) + offsetY;
         guiGraphics.fill(
                 x,
                 y,

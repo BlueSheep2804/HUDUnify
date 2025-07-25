@@ -22,7 +22,16 @@ public interface IWidget {
     boolean isVisible();
     void setVisible(boolean visible);
 
-    void render(GuiGraphics guiGraphics);
+    int getWidth();
+    int getHeight();
+
+    default void init() {}
+
+    void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight);
+
+    default void render(GuiGraphics guiGraphics) {
+        render(guiGraphics, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight());
+    }
 
     default int calculatePosX(int width, int screenWidth) {
         float offsetX = getOriginPoint().getX();

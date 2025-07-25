@@ -26,4 +26,13 @@ public enum OriginPoint {
     public float getY() {
         return y;
     }
+
+    public static OriginPoint fromFloat(float x, float y) {
+        for (OriginPoint point : values()) {
+            if (point.x == x && point.y == y) {
+                return point;
+            }
+        }
+        throw new IllegalArgumentException("No OriginPoint found for coordinates: (" + x + ", " + y + ")");
+    }
 }

@@ -1,7 +1,7 @@
 package io.github.bluesheep2804.unifyhud.widget;
 
 import io.github.bluesheep2804.unifyhud.api.component.IComponent;
-import io.github.bluesheep2804.unifyhud.api.widget.AbstractBasicWidget;
+import io.github.bluesheep2804.unifyhud.api.widget.AbstractWidget;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import static io.github.bluesheep2804.unifyhud.UnifyHud.rl;
 
-public class TextWidget extends AbstractBasicWidget {
+public class TextWidget extends AbstractWidget {
     private IComponent<?> component;
     private String prefix = "";
     private String suffix = "";
@@ -88,9 +88,35 @@ public class TextWidget extends AbstractBasicWidget {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics) {
+    public int getWidth() {
+        return Minecraft.getInstance().font.width(generateComponent());
+    }
+
+    @Override
+    public int getHeight() {
+        return Minecraft.getInstance().font.lineHeight;
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
+        Component textComponent = generateComponent();
         Font font = Minecraft.getInstance().font;
+        int width = font.width(textComponent);
+        int height = font.lineHeight;
+        int x = calculatePosX(width, maxWidth) + offsetX;
+        int y = calculatePosY(height, maxHeight) + offsetY;
+        guiGraphics.drawString(
+                font,
+                textComponent,
+                x,
+                y,
+                getColorInt(),
+                dropShadow
+        );
+    }
+
+    private Component generateComponent() {
         Object component = getComponent().resolve();
         Component textComponent;
         if (component instanceof Component) {
@@ -101,16 +127,7 @@ public class TextWidget extends AbstractBasicWidget {
             textComponent = Component.literal(prefix + component.toString() + suffix)
                     .withStyle(convertStyleToChatFormatting());
         }
-        int x = calculatePosX(font.width(textComponent), guiGraphics.guiWidth());
-        int y = calculatePosY(font.lineHeight, guiGraphics.guiHeight());
-        guiGraphics.drawString(
-                font,
-                textComponent,
-                x,
-                y,
-                getColorInt(),
-                dropShadow
-        );
+        return textComponent;
     }
 
     public enum Style {
