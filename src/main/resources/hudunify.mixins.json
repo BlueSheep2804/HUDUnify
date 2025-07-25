@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.bluesheep.hudunify.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "hudunify.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "GuiOverlayManagerAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
