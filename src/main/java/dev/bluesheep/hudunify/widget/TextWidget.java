@@ -15,6 +15,9 @@ import java.util.Arrays;
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
 public class TextWidget extends AbstractWidget {
+    private transient int tick = 0;
+    private transient Component componentCache = Component.empty();
+
     private IComponent<?> component;
     private String prefix = "";
     private String suffix = "";
@@ -89,7 +92,12 @@ public class TextWidget extends AbstractWidget {
 
     @Override
     public int getWidth() {
-        return Minecraft.getInstance().font.width(generateComponent());
+        int nowTick = Minecraft.getInstance().gui.getGuiTicks();
+        if (tick != nowTick) {
+            tick = nowTick;
+            generateComponent();
+        }
+        return Minecraft.getInstance().font.width(componentCache);
     }
 
     @Override
@@ -100,15 +108,20 @@ public class TextWidget extends AbstractWidget {
     @Override
     public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
-        Component textComponent = generateComponent();
+        int nowTick = Minecraft.getInstance().gui.getGuiTicks();
+        if (tick != nowTick) {
+            tick = nowTick;
+            generateComponent();
+        }
+
         Font font = Minecraft.getInstance().font;
-        int width = font.width(textComponent);
-        int height = font.lineHeight;
+        int width = getWidth();
+        int height = getHeight();
         int x = calculatePosX(width, maxWidth) + offsetX;
         int y = calculatePosY(height, maxHeight) + offsetY;
         guiGraphics.drawString(
                 font,
-                textComponent,
+                componentCache,
                 x,
                 y,
                 getColorInt(),
@@ -116,18 +129,16 @@ public class TextWidget extends AbstractWidget {
         );
     }
 
-    private Component generateComponent() {
+    private void generateComponent() {
         Object component = getComponent().resolve();
-        Component textComponent;
         if (component instanceof Component) {
-            textComponent = Component.empty()
+            componentCache = Component.empty()
                     .withStyle(convertStyleToChatFormatting())
                     .append(prefix).append((Component) component).append(suffix);
         } else {
-            textComponent = Component.literal(prefix + component.toString() + suffix)
+            componentCache = Component.literal(prefix + component.toString() + suffix)
                     .withStyle(convertStyleToChatFormatting());
         }
-        return textComponent;
     }
 
     public enum Style {
