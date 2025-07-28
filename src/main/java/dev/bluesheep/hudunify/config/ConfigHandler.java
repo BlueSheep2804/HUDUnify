@@ -2,7 +2,6 @@ package dev.bluesheep.hudunify.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.bluesheep.hudunify.api.component.IComponent;
 import dev.bluesheep.hudunify.api.layer.IHudUnifyLayer;
 import dev.bluesheep.hudunify.api.widget.IWidget;
 import dev.bluesheep.hudunify.layer.LayerHandler;
@@ -21,7 +20,6 @@ import static dev.bluesheep.hudunify.HudUnify.MODID;
 public class ConfigHandler {
     public static ConfigHandler INSTANCE = new ConfigHandler();
     private final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(IComponent.class, new ComponentDeserializer())
             .registerTypeAdapter(IWidget.class, new WidgetDeserializer())
             .registerTypeAdapter(IHudUnifyLayer.class, new LayerDeserializer())
             .create();

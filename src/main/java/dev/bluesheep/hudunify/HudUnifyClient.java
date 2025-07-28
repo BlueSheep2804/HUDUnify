@@ -1,7 +1,7 @@
 package dev.bluesheep.hudunify;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import dev.bluesheep.hudunify.component.*;
+import dev.bluesheep.hudunify.function.*;
 import dev.bluesheep.hudunify.widget.*;
 import dev.bluesheep.hudunify.config.ConfigHandler;
 import dev.bluesheep.hudunify.layer.LayerHandler;
@@ -15,6 +15,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.Map;
 
 import static dev.bluesheep.hudunify.HudUnify.MODID;
 import static dev.bluesheep.hudunify.HudUnify.LOGGER;
@@ -32,16 +34,9 @@ public class HudUnifyClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.addListener(HudUnifyClient::onClientTick);
         LayerHandler.INSTANCE.init();
-        ComponentRegistry.INSTANCE.registerAll(
-                new ItemCountComponent(),
-                new ItemDamageComponent(),
-                new LiteralComponent(),
-                new ItemEnergyComponent(),
-                new ItemNameComponent(),
-                new ItemIdComponent(),
-                new PlayerHealthComponent(),
-                new PlayerPosComponent(),
-                new PlayerRotationComponent()
+        ExpressionHandler.INSTANCE.registerAll(
+                Map.entry("player", new PlayerFunction()),
+                Map.entry("item", new ItemFunction())
         );
         WidgetRegistry.INSTANCE.registerAll(
                 new TextWidget(),

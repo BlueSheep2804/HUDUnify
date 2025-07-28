@@ -1,7 +1,7 @@
 package dev.bluesheep.hudunify.widget;
 
-import dev.bluesheep.hudunify.api.component.IComponent;
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
+import dev.bluesheep.hudunify.function.ExpressionHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -18,35 +18,17 @@ public class TextWidget extends AbstractWidget {
     private transient int tick = 0;
     private transient Component componentCache = Component.empty();
 
-    private IComponent<?> component;
-    private String prefix = "";
-    private String suffix = "";
+    private String text = "";
     private Style[] style = {Style.NORMAL};
     private String color = "#FFFFFF";
     private boolean dropShadow = true;
 
-    public IComponent<?> getComponent() {
-        return component;
+    public String getText() {
+        return this.text;
     }
 
-    public void setComponent(IComponent<?> component) {
-        this.component = component;
-    }
-
-    public String getPrefix() {
-        return this.prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getSuffix() {
-        return this.suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Style[] getStyle() {
@@ -130,15 +112,8 @@ public class TextWidget extends AbstractWidget {
     }
 
     private void generateComponent() {
-        Object component = getComponent().resolve();
-        if (component instanceof Component) {
-            componentCache = Component.empty()
-                    .withStyle(convertStyleToChatFormatting())
-                    .append(prefix).append((Component) component).append(suffix);
-        } else {
-            componentCache = Component.literal(prefix + component.toString() + suffix)
-                    .withStyle(convertStyleToChatFormatting());
-        }
+        componentCache = Component.literal(ExpressionHandler.INSTANCE.parse(text))
+                .withStyle(convertStyleToChatFormatting());
     }
 
     public enum Style {
