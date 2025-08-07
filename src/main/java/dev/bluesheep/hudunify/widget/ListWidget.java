@@ -4,6 +4,8 @@ import dev.bluesheep.hudunify.api.widget.AbstractWidget;
 import dev.bluesheep.hudunify.api.widget.IHasChildrenWidget;
 import dev.bluesheep.hudunify.api.widget.IWidget;
 import dev.bluesheep.hudunify.api.widget.OriginPoint;
+import dev.bluesheep.hudunify.function.cache.CachedValueDirection;
+import dev.bluesheep.hudunify.function.cache.CachedValueInt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -21,22 +23,24 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
     private transient int totalSize = 0;
 
     private List<IWidget> widgets;
-    private Direction direction = Direction.HORIZONTAL;
-    private int padding = 0;
+    private String direction = "HORIZONTAL";
+    private final transient CachedValueDirection directionCache = new CachedValueDirection(() -> direction);
+    private String padding = "0";
+    private final transient CachedValueInt paddingCache = new CachedValueInt(() -> padding);
 
     @Override
     public void init() {
         // TOP_LEFT以外に設定してると並び順を無視してしまうので、方向によってTOP, LEFTに強制的に設定する
         widgets.forEach(widget -> {
             OriginPoint origin = widget.getOriginPoint();
-            switch (direction) {
+            switch (getDirection()) {
                 case HORIZONTAL -> {
                     if (origin.getX() != 0)
-                        widget.setOriginPoint(OriginPoint.fromFloat(0, origin.getY()));
+                        widget.setOriginPoint(OriginPoint.fromFloat(0, origin.getY()).name());
                 }
                 case VERTICAL -> {
                     if (origin.getY() != 0)
-                        widget.setOriginPoint(OriginPoint.fromFloat(origin.getX(), 0));
+                        widget.setOriginPoint(OriginPoint.fromFloat(origin.getX(), 0).name());
                 }
             }
         });
@@ -53,18 +57,26 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
     }
 
     public Direction getDirection() {
+        return directionCache.getValue();
+    }
+
+    public String getDirectionRaw() {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 
     public int getPadding() {
+        return paddingCache.getValue();
+    }
+
+    public String getPaddingRaw() {
         return padding;
     }
 
-    public void setPadding(int padding) {
+    public void setPadding(String padding) {
         this.padding = padding;
     }
 
@@ -80,7 +92,7 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
             tick = nowTick;
             updateSizes();
         }
-        return direction == Direction.HORIZONTAL ? totalSize : (int) maxSize;
+        return getDirection() == Direction.HORIZONTAL ? totalSize : (int) maxSize;
     }
 
     @Override
@@ -90,7 +102,7 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
             tick = nowTick;
             updateSizes();
         }
-        return direction == Direction.VERTICAL ? totalSize : (int) maxSize;
+        return getDirection() == Direction.VERTICAL ? totalSize : (int) maxSize;
     }
 
     private void updateSizes() {
@@ -101,12 +113,12 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
                         widget -> new Vec2(widget.getWidth(), widget.getHeight())
                 ));
         maxSize = sizes.values().stream()
-                .map(size -> direction == Direction.VERTICAL ? size.x : size.y)
+                .map(size -> getDirection() == Direction.VERTICAL ? size.x : size.y)
                 .max(Comparator.naturalOrder())
                 .orElse(0f);
         totalSize = sizes.values().stream()
-                .mapToInt(size -> (int) (direction == Direction.HORIZONTAL ? size.x : size.y) + padding)
-                .sum() - padding;
+                .mapToInt(size -> (int) (getDirection() == Direction.HORIZONTAL ? size.x : size.y) + getPadding())
+                .sum() - getPadding();
     }
 
     @Override
@@ -118,6 +130,8 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
             tick = nowTick;
             updateSizes();
         }
+
+        Direction direction = getDirection();
 
         int childrenOffsetX = calculatePosX(
                 direction == Direction.VERTICAL ? (int) maxSize : totalSize,
@@ -137,8 +151,8 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
             );
             Vec2 size = sizes.get(widget.hashCode());
             switch (direction) {
-                case HORIZONTAL -> childrenOffsetX += (int) size.x + padding;
-                case VERTICAL -> childrenOffsetY += (int) size.y + padding;
+                case HORIZONTAL -> childrenOffsetX += (int) size.x + getPadding();
+                case VERTICAL -> childrenOffsetY += (int) size.y + getPadding();
             }
         }
     }

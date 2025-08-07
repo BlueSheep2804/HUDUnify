@@ -7,20 +7,20 @@ public interface IWidget {
     ResourceLocation getId();
 
     int getPosX();
-    void setPosX(int posX);
-    int getPosY();
-    void setPosY(int posY);
+    String getPosXRaw();
+    void setPosX(String posX);
 
-    default void setPosition(int posX, int posY) {
-        setPosX(posX);
-        setPosY(posY);
-    }
+    int getPosY();
+    String getPosYRaw();
+    void setPosY(String posY);
 
     OriginPoint getOriginPoint();
-    void setOriginPoint(OriginPoint originPoint);
+    String getOriginPointRaw();
+    void setOriginPoint(String originPoint);
 
     boolean isVisible();
-    void setVisible(boolean visible);
+    String isVisibleRaw();
+    void setVisible(String visible);
 
     int getWidth();
     int getHeight();

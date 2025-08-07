@@ -1,6 +1,8 @@
 package dev.bluesheep.hudunify.widget;
 
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
+import dev.bluesheep.hudunify.function.cache.CachedValueInt;
+import dev.bluesheep.hudunify.function.cache.CachedValueString;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CommonColors;
@@ -8,29 +10,44 @@ import net.minecraft.util.CommonColors;
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
 public class RectangleWidget extends AbstractWidget {
-    private int width;
-    private int height;
-    private String color = "#FFFFFF";
+    private String width = "16";
+    private final transient CachedValueInt widthCache = new CachedValueInt(() -> width);
+    private String height = "16";
+    private final transient CachedValueInt heightCache = new CachedValueInt(() -> height);
+    private String color = "#FFFFFFFF";
+    private final transient CachedValueString colorCache = new CachedValueString(() -> color);
 
     @Override
     public int getWidth() {
+        return widthCache.getValue();
+    }
+
+    public String getWidthRaw() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
     @Override
     public int getHeight() {
+        return heightCache.getValue();
+    }
+
+    public String getHeightRaw() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
     public String getColor() {
+        return colorCache.getValue();
+    }
+
+    public String getColorRaw() {
         return color;
     }
 
@@ -40,7 +57,7 @@ public class RectangleWidget extends AbstractWidget {
 
     public Integer getColorInt() {
         try {
-            return Integer.parseInt(color.replace("#", ""), 16);
+            return Integer.parseInt(getColor().replace("#", ""), 16);
         } catch (NumberFormatException e) {
             return CommonColors.WHITE;
         }
@@ -54,13 +71,13 @@ public class RectangleWidget extends AbstractWidget {
     @Override
     public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
-        int x = calculatePosX(width, maxWidth) + offsetX;
-        int y = calculatePosY(height, maxHeight) + offsetY;
+        int x = calculatePosX(getWidth(), maxWidth) + offsetX;
+        int y = calculatePosY(getHeight(), maxHeight) + offsetY;
         guiGraphics.fill(
                 x,
                 y,
-                x + width,
-                y + height,
+                x + getWidth(),
+                y + getHeight(),
                 getColorInt()
         );
     }

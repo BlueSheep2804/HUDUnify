@@ -1,12 +1,15 @@
 package dev.bluesheep.hudunify.api.widget;
 
+import java.util.Locale;
+import java.util.Objects;
+
 public enum OriginPoint {
-    TOP_LEFT(0, 0),
-    TOP_RIGHT(1, 0),
-    BOTTOM_LEFT(0, 1),
-    BOTTOM_RIGHT(1, 1),
-    TOP_CENTER(0.5f, 0),
-    BOTTOM_CENTER(0.5f, 1),
+    LEFT_TOP(0, 0),
+    RIGHT_TOP(1, 0),
+    LEFT_BOTTOM(0, 1),
+    RIGHT_BOTTOM(1, 1),
+    CENTER_TOP(0.5f, 0),
+    CENTER_BOTTOM(0.5f, 1),
     LEFT_CENTER(0, 0.5f),
     RIGHT_CENTER(1, 0.5f),
     CENTER(0.5f, 0.5f);
@@ -34,5 +37,28 @@ public enum OriginPoint {
             }
         }
         throw new IllegalArgumentException("No OriginPoint found for coordinates: (" + x + ", " + y + ")");
+    }
+
+    public static OriginPoint fromString(String str) {
+        String[] words = str.toLowerCase(Locale.US).split("_");
+        if (words.length == 1 && Objects.equals(words[0], "center")) {
+            return CENTER;
+        }
+        if (words.length != 2) {
+            throw new IllegalArgumentException("Invalid OriginPoint format: " + str);
+        }
+        float x = switch (words[0]) {
+            case "left" -> 0;
+            case "right" -> 1;
+            case "center" -> 0.5f;
+            default -> throw new IllegalArgumentException("Invalid x coordinate in OriginPoint: " + words[0]);
+        };
+        float y = switch (words[1]) {
+            case "top" -> 0;
+            case "bottom" -> 1;
+            case "center" -> 0.5f;
+            default -> throw new IllegalArgumentException("Invalid y coordinate in OriginPoint: " + words[1]);
+        };
+        return fromFloat(x, y);
     }
 }

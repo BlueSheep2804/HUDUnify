@@ -48,4 +48,8 @@ public class ExpressionHandler {
         matcher.appendTail(result);
         return result.toString();
     }
+
+    public int parseInt(String input) {
+        return Integer.parseInt(parse(input));
+    }
 }

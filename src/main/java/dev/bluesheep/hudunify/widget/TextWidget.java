@@ -1,12 +1,15 @@
 package dev.bluesheep.hudunify.widget;
 
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
-import dev.bluesheep.hudunify.function.ExpressionHandler;
+import dev.bluesheep.hudunify.function.cache.CachedValueBoolean;
+import dev.bluesheep.hudunify.function.cache.CachedValueComponent;
+import dev.bluesheep.hudunify.function.cache.CachedValueString;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CommonColors;
 
@@ -15,16 +18,21 @@ import java.util.Arrays;
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
 public class TextWidget extends AbstractWidget {
-    private transient int tick = 0;
-    private transient Component componentCache = Component.empty();
-
     private String text = "";
+    private final transient CachedValueComponent textCache = new CachedValueComponent(() -> text);
     private Style[] style = {Style.NORMAL};
-    private String color = "#FFFFFF";
-    private boolean dropShadow = true;
+    private String color = "#FFFFFFFF";
+    private final transient CachedValueString colorCache = new CachedValueString(() -> color);
+    private String dropShadow = "true";
+    private final transient CachedValueBoolean dropShadowCache = new CachedValueBoolean(() -> dropShadow);
 
-    public String getText() {
-        return this.text;
+    public Component getText() {
+        return textCache.getValue()
+                .withStyle(convertStyleToChatFormatting());
+    }
+
+    public String getTextRaw() {
+        return text;
     }
 
     public void setText(String text) {
@@ -44,6 +52,10 @@ public class TextWidget extends AbstractWidget {
     }
 
     public String getColor() {
+        return colorCache.getValue();
+    }
+
+    public String getColorRaw() {
         return color;
     }
 
@@ -53,17 +65,21 @@ public class TextWidget extends AbstractWidget {
 
     public Integer getColorInt() {
         try {
-            return Integer.parseInt(color.replace("#", ""), 16);
+            return Integer.parseInt(getColor().replace("#", ""), 16);
         } catch (NumberFormatException e) {
             return CommonColors.WHITE;
         }
     }
 
     public boolean hasDropShadow() {
+        return dropShadowCache.getValue();
+    }
+
+    public String getDropShadowRaw() {
         return dropShadow;
     }
 
-    public void setDropShadow(boolean dropShadow) {
+    public void setDropShadow(String dropShadow) {
         this.dropShadow = dropShadow;
     }
 
@@ -74,12 +90,7 @@ public class TextWidget extends AbstractWidget {
 
     @Override
     public int getWidth() {
-        int nowTick = Minecraft.getInstance().gui.getGuiTicks();
-        if (tick != nowTick) {
-            tick = nowTick;
-            generateComponent();
-        }
-        return Minecraft.getInstance().font.width(componentCache);
+        return Minecraft.getInstance().font.width(getText());
     }
 
     @Override
@@ -90,12 +101,6 @@ public class TextWidget extends AbstractWidget {
     @Override
     public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
-        int nowTick = Minecraft.getInstance().gui.getGuiTicks();
-        if (tick != nowTick) {
-            tick = nowTick;
-            generateComponent();
-        }
-
         Font font = Minecraft.getInstance().font;
         int width = getWidth();
         int height = getHeight();
@@ -103,17 +108,12 @@ public class TextWidget extends AbstractWidget {
         int y = calculatePosY(height, maxHeight) + offsetY;
         guiGraphics.drawString(
                 font,
-                componentCache,
+                getText(),
                 x,
                 y,
                 getColorInt(),
-                dropShadow
+                hasDropShadow()
         );
-    }
-
-    private void generateComponent() {
-        componentCache = Component.literal(ExpressionHandler.INSTANCE.parse(text))
-                .withStyle(convertStyleToChatFormatting());
     }
 
     public enum Style {
