@@ -1,6 +1,7 @@
 package dev.bluesheep.hudunify.widget;
 
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
+import dev.bluesheep.hudunify.api.widget.IHasColorOption;
 import dev.bluesheep.hudunify.function.cache.CachedValueBoolean;
 import dev.bluesheep.hudunify.function.cache.CachedValueComponent;
 import dev.bluesheep.hudunify.function.cache.CachedValueString;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CommonColors;
 
@@ -17,7 +19,7 @@ import java.util.Arrays;
 
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
-public class TextWidget extends AbstractWidget {
+public class TextWidget extends AbstractWidget implements IHasColorOption {
     private String text = "";
     private final transient CachedValueComponent textCache = new CachedValueComponent(() -> text);
     private Style[] style = {Style.NORMAL};
@@ -51,24 +53,19 @@ public class TextWidget extends AbstractWidget {
         return Arrays.stream(style).map(Style::getFormat).toArray(ChatFormatting[]::new);
     }
 
+    @Override
     public String getColor() {
         return colorCache.getValue();
     }
 
+    @Override
     public String getColorRaw() {
         return color;
     }
 
+    @Override
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Integer getColorInt() {
-        try {
-            return Integer.parseInt(getColor().replace("#", ""), 16);
-        } catch (NumberFormatException e) {
-            return CommonColors.WHITE;
-        }
     }
 
     public boolean hasDropShadow() {

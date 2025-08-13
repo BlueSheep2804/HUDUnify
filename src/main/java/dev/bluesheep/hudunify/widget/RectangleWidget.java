@@ -1,6 +1,7 @@
 package dev.bluesheep.hudunify.widget;
 
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
+import dev.bluesheep.hudunify.api.widget.IHasColorOption;
 import dev.bluesheep.hudunify.function.cache.CachedValueInt;
 import dev.bluesheep.hudunify.function.cache.CachedValueString;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,7 +10,7 @@ import net.minecraft.util.CommonColors;
 
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
-public class RectangleWidget extends AbstractWidget {
+public class RectangleWidget extends AbstractWidget implements IHasColorOption {
     private String width = "16";
     private final transient CachedValueInt widthCache = new CachedValueInt(() -> width);
     private String height = "16";
@@ -43,24 +44,19 @@ public class RectangleWidget extends AbstractWidget {
         this.height = height;
     }
 
+    @Override
     public String getColor() {
         return colorCache.getValue();
     }
 
+    @Override
     public String getColorRaw() {
         return color;
     }
 
+    @Override
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Integer getColorInt() {
-        try {
-            return Integer.parseInt(getColor().replace("#", ""), 16);
-        } catch (NumberFormatException e) {
-            return CommonColors.WHITE;
-        }
     }
 
     @Override
