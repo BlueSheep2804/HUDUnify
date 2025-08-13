@@ -14,9 +14,9 @@ public interface IWidget {
     String getPosYRaw();
     void setPosY(String posY);
 
-    OriginPoint getOriginPoint();
-    String getOriginPointRaw();
-    void setOriginPoint(String originPoint);
+    Anchor getAnchor();
+    String getAnchorRaw();
+    void setAnchor(String anchor);
 
     boolean isVisible();
     String isVisibleRaw();
@@ -34,12 +34,12 @@ public interface IWidget {
     }
 
     default int calculatePosX(int width, int screenWidth) {
-        float offsetX = getOriginPoint().getX();
+        float offsetX = getAnchor().getX();
         return (int) ((screenWidth * offsetX) - (width * offsetX)) + getPosX();
     }
 
     default int calculatePosY(int height, int screenHeight) {
-        float offsetY = getOriginPoint().getY();
+        float offsetY = getAnchor().getY();
         return (int) ((screenHeight * offsetY) - (height * offsetY)) + getPosY();
     }
 }

@@ -3,7 +3,7 @@ package dev.bluesheep.hudunify.widget;
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
 import dev.bluesheep.hudunify.api.widget.IHasChildrenWidget;
 import dev.bluesheep.hudunify.api.widget.IWidget;
-import dev.bluesheep.hudunify.api.widget.OriginPoint;
+import dev.bluesheep.hudunify.api.widget.Anchor;
 import dev.bluesheep.hudunify.function.cache.CachedValueDirection;
 import dev.bluesheep.hudunify.function.cache.CachedValueInt;
 import net.minecraft.client.Minecraft;
@@ -32,15 +32,15 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
     public void init() {
         // TOP_LEFT以外に設定してると並び順を無視してしまうので、方向によってTOP, LEFTに強制的に設定する
         widgets.forEach(widget -> {
-            OriginPoint origin = widget.getOriginPoint();
+            Anchor anchor = widget.getAnchor();
             switch (getDirection()) {
                 case HORIZONTAL -> {
-                    if (origin.getX() != 0)
-                        widget.setOriginPoint(OriginPoint.fromFloat(0, origin.getY()).name());
+                    if (anchor.getX() != 0)
+                        widget.setAnchor(Anchor.fromFloat(0, anchor.getY()).name());
                 }
                 case VERTICAL -> {
-                    if (origin.getY() != 0)
-                        widget.setOriginPoint(OriginPoint.fromFloat(origin.getX(), 0).name());
+                    if (anchor.getY() != 0)
+                        widget.setAnchor(Anchor.fromFloat(anchor.getX(), 0).name());
                 }
             }
         });
