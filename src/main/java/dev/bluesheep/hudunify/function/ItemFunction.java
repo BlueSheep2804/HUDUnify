@@ -31,9 +31,9 @@ public class ItemFunction extends AbstractFunction {
                 case "count_max" -> itemStack.getMaxStackSize();
                 case "count_percentage" -> (int) ((itemStack.getCount() / (float) itemStack.getMaxStackSize()) * 100);
 
-                case "damage" -> itemStack.getDamageValue();
-                case "damage_max" -> itemStack.getMaxDamage();
-                case "damage_percentage" -> (int) ((itemStack.getDamageValue() / (float) itemStack.getMaxDamage()) * 100);
+                case "durability" -> itemStack.getDamageValue();
+                case "durability_max" -> itemStack.getMaxDamage();
+                case "durability_percentage" -> (int) ((itemStack.getDamageValue() / (float) itemStack.getMaxDamage()) * 100);
 
                 case "energy" -> getEnergyCapability(itemStack).map(IEnergyStorage::getEnergyStored).orElse(0);
                 case "energy_max" -> getEnergyCapability(itemStack).map(IEnergyStorage::getMaxEnergyStored).orElse(0);
