@@ -6,6 +6,7 @@ import dev.bluesheep.hudunify.api.widget.IWidget;
 import dev.bluesheep.hudunify.function.ExpressionHandler;
 import dev.bluesheep.hudunify.widget.WidgetRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +45,9 @@ public class ApiImpl extends HudUnifyApi {
 
     @Override
     public ItemStack getPlayerItemStack(int slotId) {
-        return Minecraft.getInstance().player.getInventory().getItem(slotId);
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null) return ItemStack.EMPTY;
+        return player.getInventory().getItem(slotId);
     }
 
     @Override
