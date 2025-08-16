@@ -12,6 +12,11 @@ public interface IHasColorOption {
     default Integer getColorInt() {
         TextColor color = TextColor.parseColor(getColor());
         if (color == null) return -1;
-        return color.getValue();
+        int colorValue = color.getValue();
+        if (colorValue < 0x1000000) {
+            return colorValue | 0xFF000000;
+        } else {
+            return colorValue;
+        }
     }
 }
