@@ -1,8 +1,12 @@
 package dev.bluesheep.hudunify.api;
 
+import com.ezylang.evalex.functions.FunctionIfc;
+import dev.bluesheep.hudunify.api.widget.IWidget;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Map;
 
 public abstract class HudUnifyApi {
     private static HudUnifyApi instance;
@@ -23,6 +27,12 @@ public abstract class HudUnifyApi {
         }
         return instance;
     }
+
+    public abstract void registerFunction(String name, FunctionIfc function);
+    public abstract void registerFunctionAll(Map.Entry<String, FunctionIfc>... functions);
+
+    public abstract void registerWidget(IWidget widget);
+    public abstract void registerWidgetAll(IWidget... widgets);
 
     public abstract ItemStack getPlayerItemStack(int slotId);
     public abstract Player getPlayer();
