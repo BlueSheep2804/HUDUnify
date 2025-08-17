@@ -1,7 +1,8 @@
 # HUDUnify overlays.json
 
 > [!IMPORTANT]
-> WIP
+> 開発中のModのため、予告なく仕様を変更する可能性があります。  
+> ご了承ください。
 
 ## 基本
 ルートにリストがあり、その中にレイヤーを並べて記述していきます。
@@ -92,6 +93,7 @@
 ### Rectangle
 ```json
 {
+  ...
   "type": "hudunify:rectangle",
   "width": "24",
   "height": "16",
@@ -104,6 +106,7 @@
 ### Texture
 ```json
 {
+  ...
   "type": "hudunify:texture",
   "texture": "minecraft:textures/item/diamond.png"
 }
@@ -114,6 +117,7 @@
 ### List
 ```json
 {
+  ...
   "type": "hudunify:list",
   "direction": "HORIZONTAL",
   "padding": "4",
