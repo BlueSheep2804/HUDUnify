@@ -5,7 +5,7 @@ import com.ezylang.evalex.data.EvaluationValue;
 import com.ezylang.evalex.functions.AbstractFunction;
 import com.ezylang.evalex.functions.FunctionParameter;
 import com.ezylang.evalex.parser.Token;
-import dev.bluesheep.hudunify.ApiImpl;
+import dev.bluesheep.hudunify.PlayerUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -21,7 +21,7 @@ public class ItemFunction extends AbstractFunction {
         EvaluationValue attribute = evaluationValues[0];
         EvaluationValue slot = evaluationValues[1];
 
-        ItemStack itemStack = ApiImpl.INSTANCE.getPlayerItemStack(slot.isNumberValue() ? slot.getNumberValue().intValue() : 0);
+        ItemStack itemStack = PlayerUtils.getPlayerItemStack(slot.isNumberValue() ? slot.getNumberValue().intValue() : 0);
         return EvaluationValue.of(
             switch (attribute.getStringValue()) {
                 case "name" -> itemStack.getDisplayName().toFlatList().get(1).getString();

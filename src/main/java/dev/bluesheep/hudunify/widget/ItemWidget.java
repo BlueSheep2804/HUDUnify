@@ -1,7 +1,7 @@
 package dev.bluesheep.hudunify.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.bluesheep.hudunify.api.HudUnifyApi;
+import dev.bluesheep.hudunify.PlayerUtils;
 import dev.bluesheep.hudunify.api.widget.AbstractWidget;
 import dev.bluesheep.hudunify.function.cache.CachedValueBoolean;
 import dev.bluesheep.hudunify.function.cache.CachedValueInt;
@@ -77,7 +77,6 @@ public class ItemWidget extends AbstractWidget {
         int posX = calculatePosX(getWidth(), maxWidth) + offsetX;
         int posY = calculatePosY(getHeight(), maxHeight) + offsetY;
         int slot = getSlot();
-        HudUnifyApi api = HudUnifyApi.getInstance();
         guiGraphics.pose().pushPose();
 
         if (getShowBackground()) {
@@ -108,14 +107,14 @@ public class ItemWidget extends AbstractWidget {
                     posX,
                     posY,
                     partialTick,
-                    api.getPlayer(),
-                    api.getPlayerItemStack(slot),
+                    PlayerUtils.getPlayer(),
+                    PlayerUtils.getPlayerItemStack(slot),
                     0
             );
         } else {
             guiGraphics.renderItem(
-                    api.getPlayer(),
-                    api.getPlayerItemStack(slot),
+                    PlayerUtils.getPlayer(),
+                    PlayerUtils.getPlayerItemStack(slot),
                     posX,
                     posY,
                     0

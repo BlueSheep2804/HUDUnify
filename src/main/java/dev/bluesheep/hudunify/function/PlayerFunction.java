@@ -5,8 +5,7 @@ import com.ezylang.evalex.data.EvaluationValue;
 import com.ezylang.evalex.functions.AbstractFunction;
 import com.ezylang.evalex.functions.FunctionParameter;
 import com.ezylang.evalex.parser.Token;
-import dev.bluesheep.hudunify.ApiImpl;
-import net.minecraft.client.Camera;
+import dev.bluesheep.hudunify.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -20,8 +19,8 @@ public class PlayerFunction extends AbstractFunction {
         if (Minecraft.getInstance().level == null) {
             return EvaluationValue.of("", expression.getConfiguration());
         }
-        Player player = ApiImpl.INSTANCE.getPlayer();
-        Entity cameraEntity = ApiImpl.INSTANCE.getCameraEntity();
+        Player player = PlayerUtils.getPlayer();
+        Entity cameraEntity = PlayerUtils.getCameraEntity();
         return EvaluationValue.of(
             switch (attribute.getStringValue()) {
                 case "health" -> player.getHealth();

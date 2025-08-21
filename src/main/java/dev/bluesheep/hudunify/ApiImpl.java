@@ -42,21 +42,4 @@ public class ApiImpl extends HudUnifyApi {
     public void registerWidgetAll(IWidget... widgets) {
         WidgetRegistry.INSTANCE.registerAll(widgets);
     }
-
-    @Override
-    public ItemStack getPlayerItemStack(int slotId) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null) return ItemStack.EMPTY;
-        return player.getInventory().getItem(slotId);
-    }
-
-    @Override
-    public Player getPlayer() {
-        return Minecraft.getInstance().player;
-    }
-
-    @Override
-    public Entity getCameraEntity() {
-        return Minecraft.getInstance().getCameraEntity();
-    }
 }
