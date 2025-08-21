@@ -6,7 +6,6 @@ import dev.bluesheep.hudunify.function.cache.CachedValueInt;
 import dev.bluesheep.hudunify.function.cache.CachedValueString;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.CommonColors;
 
 import static dev.bluesheep.hudunify.HudUnify.rl;
 
@@ -65,7 +64,7 @@ public class RectangleWidget extends AbstractWidget implements IHasColorOption {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
+    public void render(GuiGraphics guiGraphics, float partialTick, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
         int x = calculatePosX(getWidth(), maxWidth) + offsetX;
         int y = calculatePosY(getHeight(), maxHeight) + offsetY;

@@ -10,10 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.CommonColors;
 
 import java.util.Arrays;
 
@@ -96,7 +93,7 @@ public class TextWidget extends AbstractWidget implements IHasColorOption {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
+    public void render(GuiGraphics guiGraphics, float partialTick, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
         Font font = Minecraft.getInstance().font;
         int width = getWidth();

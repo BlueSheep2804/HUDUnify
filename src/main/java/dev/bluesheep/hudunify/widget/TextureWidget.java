@@ -55,7 +55,7 @@ public class TextureWidget extends AbstractWidget {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
+    public void render(GuiGraphics guiGraphics, float partialTick, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
         int width = getWidth();
         int height = getHeight();

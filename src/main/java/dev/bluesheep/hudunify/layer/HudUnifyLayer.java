@@ -34,6 +34,6 @@ public class HudUnifyLayer implements IGuiOverlay, IHudUnifyLayer {
 
     @Override
     public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
-        widgets.forEach(it -> it.render(guiGraphics));
+        widgets.forEach(it -> it.render(guiGraphics, partialTick));
     }
 }

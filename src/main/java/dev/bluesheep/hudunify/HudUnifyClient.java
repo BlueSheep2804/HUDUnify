@@ -42,7 +42,8 @@ public class HudUnifyClient {
                 new TextWidget(),
                 new RectangleWidget(),
                 new TextureWidget(),
-                new ListWidget()
+                new ListWidget(),
+                new ItemWidget()
         );
         ConfigHandler.INSTANCE.loadConfig();
         LayerHandler.INSTANCE.registerOverlay();

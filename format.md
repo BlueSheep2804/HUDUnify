@@ -68,6 +68,19 @@
   "color": "#550084b2"
 ```
 
+### Item
+```json
+{
+  ...
+  "type": "hudunify:item",
+  "slot": "0",
+  "showBackground": "true",
+  "showDecorations": "true"
+}
+```
+アイテムを描画するウィジェット。  
+`type`以外のすべての値が式に対応しています。  
+
 ### Text
 ```json
 {

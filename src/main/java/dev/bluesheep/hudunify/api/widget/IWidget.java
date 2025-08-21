@@ -27,10 +27,10 @@ public interface IWidget {
 
     default void init() {}
 
-    void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight);
+    void render(GuiGraphics guiGraphics, float partialTick, int offsetX, int offsetY, int maxWidth, int maxHeight);
 
-    default void render(GuiGraphics guiGraphics) {
-        render(guiGraphics, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight());
+    default void render(GuiGraphics guiGraphics, float partialTick) {
+        render(guiGraphics, partialTick, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight());
     }
 
     default int calculatePosX(int width, int screenWidth) {

@@ -122,7 +122,7 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int offsetX, int offsetY, int maxWidth, int maxHeight) {
+    public void render(GuiGraphics guiGraphics, float partialTick, int offsetX, int offsetY, int maxWidth, int maxHeight) {
         if (!isVisible()) return;
 
         int nowTick = Minecraft.getInstance().gui.getGuiTicks();
@@ -143,7 +143,7 @@ public class ListWidget extends AbstractWidget implements IHasChildrenWidget {
         ) + offsetY;
         for (IWidget widget : widgets) {
             widget.render(
-                    guiGraphics,
+                    guiGraphics, partialTick,
                     childrenOffsetX,
                     childrenOffsetY,
                     direction == Direction.VERTICAL ? (int) maxSize : totalSize,
