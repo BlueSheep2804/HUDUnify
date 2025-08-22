@@ -21,7 +21,7 @@ public class ItemFunction extends AbstractFunction {
         EvaluationValue attribute = evaluationValues[0];
         EvaluationValue slot = evaluationValues[1];
 
-        ItemStack itemStack = PlayerUtils.getPlayerItemStack(slot.isNumberValue() ? slot.getNumberValue().intValue() : 0);
+        ItemStack itemStack = PlayerUtils.getPlayerItemStack(slot.getStringValue());
         return EvaluationValue.of(
             switch (attribute.getStringValue()) {
                 case "name" -> itemStack.getDisplayName().toFlatList().get(1).getString();

@@ -73,13 +73,25 @@
 {
   ...
   "type": "hudunify:item",
-  "slot": "0",
+  "slot": "hotbar.0",
   "showBackground": "true",
   "showDecorations": "true"
 }
 ```
 アイテムを描画するウィジェット。  
 `type`以外のすべての値が式に対応しています。  
+`slot`には、バニラで使用されているスロットIDの記述方法が使用できます。
+|スロットID|番号の範囲|説明|
+|:--|:--|:--|
+|`hotbar.<番号>`|0-8|ホットバー|
+|`inventory.<番号>`|0-26|インベントリ|
+|`weapon`||利き手のアイテム|
+|`weapon.mainhand`||利き手のアイテム|
+|`weapon.offhand`||オフハンドのアイテム|
+|`armor.head`||ヘルメット|
+|`armor.chest`||チェストプレート|
+|`armor.legs`||レギンス|
+|`armor.feet`||ブーツ|
 
 ### Text
 ```json
@@ -203,9 +215,22 @@ item(attribute, slotId)
 |energy_max|蓄電量の最大値|
 |energy_percentage|蓄電量の割合|
 
+`slotId`には、バニラで使用されているスロットIDの記述方法が使用できます。
+|スロットID|番号の範囲|説明|
+|:--|:--|:--|
+|`hotbar.<番号>`|0-8|ホットバー|
+|`inventory.<番号>`|0-26|インベントリ|
+|`weapon`||利き手のアイテム|
+|`weapon.mainhand`||利き手のアイテム|
+|`weapon.offhand`||オフハンドのアイテム|
+|`armor.head`||ヘルメット|
+|`armor.chest`||チェストプレート|
+|`armor.legs`||レギンス|
+|`armor.feet`||ブーツ|
+
 例
 ```js
-item('name', 4)
-item('count', 8)
-item('durability', 0)
+item('name', 'weapon')
+item('count', 'inventory.8')
+item('durability', 'armor.feet')
 ```
